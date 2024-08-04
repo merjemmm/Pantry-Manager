@@ -1,0 +1,5 @@
+[submodule "pantry-manage"]
+	path = pantry-manage
+	url = git@github.com:merjemmm/Pantry-Management.git
+	ignore = dirty
+
