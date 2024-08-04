@@ -53,6 +53,8 @@ export default function Home() {
   const [inventory, setInventory] = useState([])
   const [open, setOpen] = useState(false)
   const [itemName, setItemName] = useState('')
+  const [itemQuant, setItemQuant] = useState(0)
+
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredItems, setFilteredItems] = useState([])
 
@@ -94,15 +96,17 @@ export default function Home() {
 
   }
 
-  const addItem = async (item) => {
+
+  // todo 
+  const addItem = async (item, new_quant) => {
     const docRef = doc(collection(firestore, 'inventory'), item.toLowerCase())
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
       const {quantity} = docSnap.data()
-      await setDoc(docRef, {quantity: quantity + 1})
+      await setDoc(docRef, {quantity: quantity + parseFloat(new_quant)})
     } else {
-      await setDoc(docRef, {quantity: 1})
+      await setDoc(docRef, {quantity: parseFloat(new_quant)})
     }
 
     await updateInventory()
@@ -178,9 +182,9 @@ export default function Home() {
       <Box
       position = 'absolute'
       top = '50%'
-      left = '50%'
+      left = '35%'
       sx = {{transform: 'tranlate(-50%, -50%)'}}
-      width = {400}
+      width = {700}
       bgcolor = '#f0f0f0'
       boxShadow = {24}
       p = {4}
@@ -201,12 +205,29 @@ export default function Home() {
         }}
         > 
         </TextField>
+
+        <TextField
+        variant = 'outlined'
+        label="Enter Item Quantity"
+        fullwidth
+        value = {itemQuant}
+        onChange={(e) => {
+          setItemQuant(e.target.value)
+        }}
+        type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        > 
+        </TextField>
+
         <Button
         //sx = {{bgcolor: 'secondary.main'}}
         variant = 'contained'
         onClick={() => {
-          addItem(itemName)
+          addItem(itemName, itemQuant)
           setItemName('')
+          setItemQuant(0)
           handleClose()
         }}
         > 
@@ -239,8 +260,8 @@ export default function Home() {
         variant = 'outlined'
         label="Search the Inventory"
         fullwidth
-        
-        sx = {{my: 0.5, color: 'white', bgcolor: '#DDDCD7', width: '500px'}}
+        //color= '#3A737A'
+        sx = {{my: 0.5, color: 'white', bgcolor: '#DDDCD7', width: '500px', color: 'secondary'}}
         value = {searchQuery}
         onChange={(e) => {
           setSearchQuery(e.target.value)
@@ -249,9 +270,9 @@ export default function Home() {
 
         </TextField>
         </Box>
-      <Stack width = '800px' height= '300px' spacing = {2} overflow= 'auto'>
+      <Stack width = '800px' height= '300px' spacing = {1} overflow= 'auto'>
         {filteredItems.map(({name, quantity}) => (
-          <Box key = {name} width = '100%' minHeight = '150px' 
+          <Box key = {name} width = '100%' minHeight = '90px' 
           display = 'flex' alignItems= 'center' justifyContent= 'space-between'
           padding = {5} bgcolor = '#AFDADF' 
           > 
