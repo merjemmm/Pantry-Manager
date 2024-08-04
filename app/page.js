@@ -13,10 +13,10 @@ import {
   setDoc,
   deleteDoc,
   getDoc,
-} from 'firebase/firestore'
+} from 'firebase/firestore';
 import {Box, Button, Container, createTheme, Modal, Paper, ButtonGroup, searchQuery, setSearchQuery,
-  Stack, TableContainer, TextField, ThemeProvider, Typography, collectionRef, spacing} from '@mui/material'
-import { lime, purple } from '@mui/material/colors';
+  Stack, TableContainer, TextField, ThemeProvider, Typography, collectionRef, spacing} from '@mui/material';
+
 import { firestore } from "@/firebase";
 
 const theme = createTheme({
