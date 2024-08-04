@@ -71,15 +71,6 @@ export default function Home() {
     await updateInventory()
   }
 
-  // const deleteAllInventory = async () => {
-  //   const snapshot = await db.collection('inventory').get();
-  //   const batch = db.batch();
-  //   snapshot.docs.forEach(doc => {
-  //     batch.delete(doc.ref);
-  //   });
-  //   await batch.commit();
-  //   alert('All inventory items have been deleted.');
-  // };
 
   const updateInventory = async () => {
     const snapshot  = query(collection(firestore, 'inventory'))
@@ -97,7 +88,6 @@ export default function Home() {
   }
 
 
-  // todo 
   const addItem = async (item, new_quant) => {
     const docRef = doc(collection(firestore, 'inventory'), item.toLowerCase())
     const docSnap = await getDoc(docRef)
@@ -162,7 +152,8 @@ export default function Home() {
         height = "20vh"
         width= '100vw'
         sx = {{mt: 2 }}
-        flexDirection= 'column'> 
+        flexDirection= 'column'
+        bgcolor= '#A2D4DA'> 
       <Typography variant = 'h2' padding = {2} > Welcome to your Pantry Manager 
         </Typography>
         <Typography variant = 'h' padding = {3} > You can add and subtract items easily from your inventory.
@@ -174,6 +165,7 @@ export default function Home() {
     justifyContent= 'center'
     alignItems= 'center'
     gap = {2}
+    bgcolor = '#B4DCE1'
   > 
     <Modal
 
@@ -194,7 +186,7 @@ export default function Home() {
 
       > 
 
-      <Stack width = '100%' direction = 'row' spacing = {1} > 
+      <Stack width = '100%' direction = 'row' spacing = {1}> 
         <TextField
         variant = 'outlined'
         label="Enter New Item"
@@ -247,6 +239,7 @@ export default function Home() {
         display = 'flex'
         //border = '1px solid #333'
         sx = {{bgcolor: 'secondary.main'}}> 
+        
         <Typography variant = 'h2' 
         color = '#333' sx = {{my: 3, textAlign: 'center'}}> 
         Your Inventory 
@@ -270,11 +263,12 @@ export default function Home() {
 
         </TextField>
         </Box>
+
       <Stack width = '800px' height= '300px' spacing = {1} overflow= 'auto'>
         {filteredItems.map(({name, quantity}) => (
           <Box key = {name} width = '100%' minHeight = '90px' 
           display = 'flex' alignItems= 'center' justifyContent= 'space-between'
-          padding = {5} bgcolor = '#AFDADF' 
+          padding = {5} bgcolor = '#06BDD5'//'#13AABD' 
           > 
           <Typography variant = 'h3' color = '#333' textAlign= 'center' > 
             {name.charAt(0).toUpperCase() + name.slice(1)}
