@@ -104,9 +104,9 @@ export default function Home() {
 
     if (docSnap.exists()) {
       const {quantity} = docSnap.data()
-      await setDoc(docRef, {quantity: quantity + parseFloat(new_quant)})
+      await setDoc(docRef, {quantity: quantity + parseInt(new_quant)})
     } else {
-      await setDoc(docRef, {quantity: parseFloat(new_quant)})
+      await setDoc(docRef, {quantity: parseInt(new_quant)})
     }
 
     await updateInventory()
@@ -143,7 +143,7 @@ export default function Home() {
       setFilteredItems(inventory);
     }
 
-  },[searchQuery])
+  },[searchQuery, inventory])
 
   console.log(inventory)
   
@@ -287,7 +287,7 @@ export default function Home() {
           <Button variant = 'contained' onClick={() => {removeItem(name)}}>
           Remove
           </Button>
-          <Button variant = 'contained' onClick={() => {addItem(name)}}>
+          <Button variant = 'contained' onClick={() => {addItem(name, 1)}}>
           Add
           </Button>
           </Box>
